@@ -6,7 +6,9 @@ with customers as (
 
 orders as (
 
-    select * from {{ ref('stg_orders') }}
+    select a.*, b.is_valid from {{ ref('stg_orders') }} a
+    left join {{ref('seed_order_statuses')}} b
+        on a.status = b.status
 
 ),
 
